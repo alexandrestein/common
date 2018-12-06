@@ -30,6 +30,18 @@ func NewAddr(port uint16) (*Addr, error) {
 	}, nil
 }
 
+func MustNewAddr(port uint16) *Addr {
+	ret, err := NewAddr(port)
+	if err != nil {
+		return &Addr{
+			MainAddr: "::",
+			Port:     port,
+			Addrs:    []string{},
+		}
+	}
+	return ret
+}
+
 func (a *Addr) SwitchMain(i int) string {
 	if i > len(a.Addrs)-1 {
 		return ""
